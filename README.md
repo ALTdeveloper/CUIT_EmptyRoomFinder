@@ -1,0 +1,2 @@
+# CUIT_EmptyRoomFinder
+通过将教务处中的课表提取为csv文件，再对csv文件实现反向查询，快速找到没人上课的教室
