@@ -11,8 +11,15 @@
 第三行开始是教室信息
 
 # TODO:
+
 -优化正则表达式
--基于最短移动距离的教室推荐算法
+
+-(Focusing)基于最短移动距离的教室推荐算法
+
+# DevLog：
+
+0814dev 实现教室距离计算RoomDistence 多教室排序RoomVote 共有方法库roomfind(as rfd)，下一步完成功能梳理，函数拆分打包，总入口移动至main.py
 
 非计算机专业，限于能力该代码主要由Copilot完成，欢迎进一步细化开发：）
+
 CC-BY-NC-SA
