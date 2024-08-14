@@ -3,6 +3,12 @@ import pandas as pd
 import re
 from functools import reduce
 
+#黑名单房间，不会出现在可行列表里，排除体育场和机房
+roomblacklist = set(['第二篮球场1', '第二田径场1', '健身房', '第二篮球场3', '第二篮球场4', '台球室', '健美操房1', 
+                    '健美操房2','羽毛球场3', '排球场1', '羽毛球场1', '乒乓球场1', '跆拳道馆1', '网球场1', '网球场2',
+                    '第一田径场1', '棋牌室', '武术馆', '排球场2', '乒乓球场2', '跆拳道馆2', '羽毛球场2', '瑜伽馆1',
+                    '乒乓球场3', '第二篮球场2', '瑜伽馆2','H5201','H2402','H4305','H4307','H4309','H2405'])
+
 # 定义一个函数，用于处理CSV文件并提取教室信息
 def extract_classroom_info(file_path):
     # 读取CSV文件
@@ -60,16 +66,19 @@ def find_UseableClassroom(data, week, day, start_lesson, end_lesson):#似乎有b
     #print(classroom)
 
     common_room = reduce(lambda s1, s2: s1.intersection(s2), classroom).difference(roomblacklist)
-    print(common_room)
-    return classroom
+    #print(common_room)
+    return common_room
 
-roomblacklist = set(['第二篮球场1', '第二田径场1', '健身房', '第二篮球场3', '第二篮球场4', '台球室', '健美操房1', 
-                    '健美操房2','羽毛球场3', '排球场1', '羽毛球场1', '乒乓球场1', '跆拳道馆1', '网球场1', '网球场2',
-                    '第一田径场1', '棋牌室', '武术馆', '排球场2', '乒乓球场2', '跆拳道馆2', '羽毛球场2', '瑜伽馆1',
-                    '乒乓球场3', '第二篮球场2', '瑜伽馆2'])#黑名单房间，不会出现在可行列表里
-# 调用函数并处理CSV文件
-classroom_info = extract_classroom_info('./2501course_tableAll.csv')
-find_UseableClassroom(classroom_info, 3, '星期四', 5, 8)
-print(classroom_info['H4112'])
-#print(find_available_classrooms(classroom_info, 1, '星期四', '6'))
-#print(classroom_info['第二篮球场1'])
+#import入口
+def autoFindClassroom(week, day, start, end):
+    # 调用函数并处理CSV文件
+    classroom_info = extract_classroom_info('./2501course_tableAll.csv')
+    return(find_UseableClassroom(classroom_info, week, day, start, end))
+
+if __name__ == '__main__':
+    # 调用函数并处理CSV文件
+    classroom_info = extract_classroom_info('./2501course_tableAll.csv')
+    find_UseableClassroom(classroom_info, 1, '星期一', 1, 4)
+    #也可以这样查询
+    #print(classroom_info['H4112'])
+    #print(classroom_info['第二篮球场1'])
